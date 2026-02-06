@@ -9,8 +9,8 @@ ARG MICROKIT_VERSION=1.4.1
 ARG MICROKIT_INSPECTA_VERSION=v1.0
 
 # Fetch some basics
-RUN apt-get update -q \
-    && apt-get install -y --no-install-recommends \
+RUN sudo apt-get update -q \
+    && sudo apt-get install -y --no-install-recommends \
         ca-certificates \
         curl \
         git \
@@ -19,11 +19,11 @@ RUN apt-get update -q \
         unzip \
         vim \
         wget \
-    && apt-get clean autoclean \
-    && apt-get autoremove --yes \
-    && rm -rf /var/lib/{apt,dpkg,cache,log}/
+    && sudo apt-get clean autoclean \
+    && sudo apt-get autoremove --yes \
+    && sudo rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-RUN rm -rf /bin/sh && ln -s /bin/bash /bin/sh
+RUN sudo rm -rf /bin/sh && sudo ln -s /bin/bash /bin/sh
 
 RUN curl -sSf https://sh.rustup.rs | \
         bash -s -- -y --no-modify-path \
