@@ -41,8 +41,8 @@ RUN cd ~ && wget https://github.com/verus-lang/verus/releases/download/release%2
   rm -rf verus-${VERUS_VERSION}-x86-linux.zip
 
 RUN cd ~ && wget https://github.com/mozilla/grcov/releases/download/v0.8.19/grcov-x86_64-unknown-linux-gnu.tar.bz2 && \
-  tar -xvf grcov-x86_64-unknown-linux-gnu.tar.bz2 && \
-  mv grcov /usr/bin/
+  sudo tar -xvf grcov-x86_64-unknown-linux-gnu.tar.bz2 && \
+  sudo mv grcov /usr/bin/
 
 ENV PATH=${PATH}:~/verus-x86-linux/
 ENV MICROKIT_BOARD=zcu102
