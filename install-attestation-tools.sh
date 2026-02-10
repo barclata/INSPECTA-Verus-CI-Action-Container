@@ -4,8 +4,6 @@ echo "************************************************"
 echo "* Building Attestation tools                   *"
 echo "************************************************"
 
-pushd ${HOME}
-
 opam init --bare --disable-sandboxing -y
 opam switch create . ocaml-system
 eval $(opam env)
@@ -17,8 +15,6 @@ mkdir -p ${AM_REPOS_ROOT}/cvm_deps
 
 pushd ${AM_REPOS_ROOT}/
 pushd cvm_deps
-
-echo "export AM_REPOS_ROOT=\${PROVERS_DIR}/am" >> ${HOME}/.bashrc
 
 git clone https://github.com/ku-sldg/rocq-candy.git \
     && pushd rocq-candy/ \

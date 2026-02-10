@@ -4,7 +4,7 @@ MICROKIT_DIR=${PROVERS_DIR}/microkit
 
 mkdir -p ${MICROKIT_DIR}
 
-cd ${MICROKIT_DIR}
+pushd ${MICROKIT_DIR}
 
 apt-get update
 apt install -y \
@@ -46,7 +46,7 @@ python3.12 -m venv pyenv
 microkit_sdk=$(find ${MICROKIT_DIR}/microkit/release/ -type d -name microkit-sdk*)
 mv ${microkit_sdk} ${PROVERS_DIR}/microkit-sdk
 
-cd ${HOME}
+popd
 rm -rf ${MICROKIT_DIR}
 
 # Remove apt packages no longer needed after sdk build

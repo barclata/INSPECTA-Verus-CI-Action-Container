@@ -36,18 +36,19 @@ RUN apt-get update -q \
 
 RUN rm -rf /bin/sh && ln -s /bin/bash /bin/sh
 
-ENV HOME=/root
-ENV PROVERS_DIR=${HOME}/provers
-
-RUN echo "export PROVERS_DIR=\${HOME}/provers" >> ${HOME}/.bashrc
+ENV PROVERS_DIR=/usr/local/provers
+ENV RUSTUP_HOME=/usr/local/rustup \
+    CARGO_HOME=/usr/local/cargo \
+    PATH=/usr/local/cargo/bin:$PATH
 
 RUN mkdir -p ${PROVERS_DIR}
 
 # Installing Rust
-RUN wget -O ${HOME}/rustup-init.sh https://sh.rustup.rs \
-    && sh ${HOME}/rustup-init.sh --default-toolchain=${RUST_VERSION}-x86_64-unknown-linux-gnu \
-        --component "rust-src,llvm-tools,rust-analyzer,rustc-dev,rustfmt" -y \
-    && rm ${HOME}/rustup-init.sh && . ${HOME}/.cargo/env \
+RUN wget -O rustup-init.sh https://sh.rustup.rs \
+    && sh rustup-init.sh -y --no-modify-path \
+        --default-toolchain=${RUST_VERSION}-x86_64-unknown-linux-gnu \
+        --component "rust-src,llvm-tools,rust-analyzer,rustc-dev,rustfmt" \
+    && rm rustup-init.sh \
     && rustup target add x86_64-unknown-linux-musl \
     && rustup target add aarch64-unknown-linux-musl \
     && rustup component add rust-src --toolchain ${RUST_VERSION}-x86_64-unknown-linux-gnu
@@ -104,4 +105,3 @@ ENV MICROKIT_BOARD=zcu102
 ENV MICROKIT_SDK=/root/microkit/
 ENV MICROKIT_CONFIG=debug
 
-ENV PATH="$PATH:/root/.cargo/bin"
